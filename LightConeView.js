@@ -145,7 +145,7 @@ image ='./assets/Ascension/Drops/Item_Core1.png'
           <View style={{flexDirection: 'row'}}>
             <Image
               style={{height:25, width:25}}
-              source={require(this.state.drops.low.img)}
+              source={this.state.drops.low.img}
             />
             <Text>{this.state.drops.low.name} {this.state.drops.low.number}</Text>
           </View>
@@ -153,7 +153,7 @@ image ='./assets/Ascension/Drops/Item_Core1.png'
           <View style={{flexDirection: 'row'}}>
             <Image
               style={{height:25, width:25}}
-              source={require(this.state.drops.med.img)}
+              source={this.state.drops.med.img}
             />
             <Text>{this.state.drops.med.name} {this.state.dropsNum.med}</Text>
           </View>
@@ -161,7 +161,7 @@ image ='./assets/Ascension/Drops/Item_Core1.png'
           <View style={{flexDirection: 'row'}}>
             <Image
               style={{height:25, width:25}}
-              source={require(this.state.drops.high.img)}
+              source={this.state.drops.high.img}
             />
             <Text>{this.state.drops.high.name} {this.state.dropsNum.high}</Text>
           </View>
