@@ -1,5 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 
@@ -99,68 +97,49 @@ export function LightConeCalculator(current, desired) {
 
   const [totalEXP, totalCredit] = calculateEXP(startPointer, endPointer)
   return [totalEXP, totalCredit]
-
-  
-
 }
 
 export function LightConeAscensionCalculator(current, desired) {
-  const startPointer = Number(current)
-  const endPointer = Number(desired)
+  var startPointer = Number(current)
+  var endPointer = Number(desired)
 
-  const ascension = {
-    one: false,
-    two: false,
-    three: false,
-    four: false,
-    five: false
-  }
-  var drops = {
-    low: 0,
-    med: 0,
-    high:0,
-  }
-  var calyx = {
-    low: 0,
-    med: 0,
-    high: 0,
-  }
+  var dropArray = [0, 0, 0]
+  var calyxArray = [0, 0, 0]
 
-  if ( endPointer >= 20 ) {
-    ascension.one = true
-    drops.low += Drop_Guide.Asc1.low
-    calyx.low += Calyx_Guide.Asc1.low
+  for (let i = startPointer; i < endPointer; i++) {
+    if ( i == 20 ) {
+      //ascension.one = true
+      dropArray[0] += Drop_Guide.Asc1.low
+      calyxArray[0] += Calyx_Guide.Asc1.low
+      };
+    if ( i == 40 ) {
+      //ascension.two = true
+      dropArray[1] += Drop_Guide.Asc2.med
+      calyxArray[1] += Calyx_Guide.Asc2.med
+    };
+    if ( i == 50 ) {
+      //ascension.three = true
+      dropArray[1] += Drop_Guide.Asc3.med
+      calyxArray[1] += Calyx_Guide.Asc3.med
     }
-  if ( endPointer >- 40 ) {
-    ascension.two = true
-    drops.med += Drop_Guide.Asc2.med
-    calyx.low += Calyx_Guide.Asc2.med
+    if ( i == 60 ) {
+      //ascension.four = true
+      dropArray[2] += Drop_Guide.Asc4.high
+      calyxArray[2] += Calyx_Guide.Asc4.high
+    }
+    if ( i == 70 ) {
+      //ascension.five = true
+      dropArray[2] += Drop_Guide.Asc5.high
+      calyxArray[2] += Calyx_Guide.Asc5.high
+    }
   }
-  if ( endPointer >= 50 ) {
-    ascension.three = true
-    drops.med += Drop_Guide.Asc3.med
-    calyx.med = Calyx_Guide.Asc3.med
-  }
-  if ( endPointer >= 60 ) {
-    ascension.four = true
-    drops.high += Drop_Guide.Asc4.high
-    calyx.high += Calyx_Guide.Asc4.high
-  }
-  if ( endPointer >= 70 ) {
-    ascension.five = true
-    drops.high += Drop_Guide.Asc5.high
-    calyx.high += Calyx_Guide.Asc5.high
-  }
-
-  return [drops.low, drops.med, drops.high, calyx.low, calyx.med, calyx.high]
+  return [dropArray, calyxArray]
 
 }
 
 function calculateEXP(startPointer, endPointer) {
   var totalEXP = 0
   var currentRate = 0
-
-
 
   for (let pointer = startPointer; pointer <= endPointer; pointer++) {
     if (pointer > 1 && pointer <= 20) {
@@ -204,10 +183,12 @@ function calculateAether(totalEXP){
   var aether = 0 //The amount of refined aethers needed
   let x=totalEXP
 
+  //every 6000 EXP add one aether, minus 3000 credit
   for (x; x>=aether_guide.high; x-=aether_guide.high){
     aether += 1
     totalCredit += (aether_guide.high/2)
   }
+  //add one additional refined aether
   if (x > 0) {
     totalCredit += Math.round(x/2)
     aether += 1

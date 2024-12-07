@@ -1,15 +1,13 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
-import {LightConeCalculator, LightConeAscensionCalculator} from './LightConeCalculator';
-import GeneralMaterials from './GeneralMaterials';
-import SpecificMaterials from './SpecificMaterials';
-import { chooseMainImage } from './ChooseImage';
+import {LightConeCalculator, LightConeAscensionCalculator} from '../LightConeCalculator';
+import GeneralMaterials from '../GeneralMaterials';
+import SpecificMaterials from '../SpecificMaterials';
+import { chooseMainImage } from '../ChooseImage';
 
-import { useRoute } from '@react-navigation/native';
+import { styles } from '../styles';
 
-
-
-export default class LightconeView extends Component{
+export default class WoofWalkTime_Screen extends Component{
   constructor(){
     super()
       this.state = {
@@ -20,7 +18,7 @@ export default class LightconeView extends Component{
         Credit: 0,
         Aether: 0,
 
-        lightconeName: '',
+        lightconeName: 'Woof! Walk Time',
 
         dropArray: [0,0,0],
         dropsNames : [
@@ -39,11 +37,6 @@ export default class LightconeView extends Component{
     }
   }
 
-  componentDidMount(){
-    const title = this.props.route.name
-    console.log(route.name);
-    //this.setState({lightconeName: routeName})
-  }
   //Updates on text input change
   updateCurrentLevel = (value) => {
       this.setState({currentLevel: value})
@@ -63,18 +56,13 @@ export default class LightconeView extends Component{
     this.setState({ calyxArray: calyxArray});
    }
 
-
-
-
-
    render(){
     return (
       <View style={styles.container}>
-
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.lightTextContainer}>
           {chooseMainImage(this.state.lightconeName)}
 
-          <View style={[styles.textInputContainer, {flex:1}]}>
+          <View style={[styles.textInputContainer]}>
             <Text>Current Level (Integer 1-80)</Text>
             <TextInput
               style ={styles.input}
@@ -94,10 +82,12 @@ export default class LightconeView extends Component{
 
         </View>
 
-        <Button
-          onPress={() => this.calculate(this.state.currentLevel, this.state.desiredLevel)}
-          title="Calculate"
-        />
+        <View style={styles.button}>
+          <Button
+            onPress={() => this.calculate(this.state.currentLevel, this.state.desiredLevel)}
+            title="Calculate"
+          />
+        </View>
         <GeneralMaterials Aether={this.state.Aether} Credit={this.state.Credit}/>
         <SpecificMaterials
           dropsArray={this.state.dropArray}
@@ -106,54 +96,6 @@ export default class LightconeView extends Component{
           calyxNames={this.state.calyxNames}
         />
       </View>
-    );}
+        
+  );}
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex:1,
-    backgroundColor: '#fff',
-    alignItems: 'left',
-    justifyContent: 'left',
-  },
-
-  lightconeTitle :{
-    fontSize:20,
-    marginBottom:20,
-    fontWeight: '500',
-  },
-
-  textInputContainer: {
-    margin: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  input: {
-    borderWidth:1,
-    padding:5,
-    margin:5,
-  },
-
-  drops: {
-    flex:1,
-    borderWidth:1,
-    padding:5,
-    margin:5,
-  },
-  
-  calyx: {
-    flex:1,
-    borderWidth:1,
-    padding:5,
-    margin:5,
-  },
-
-  specificMaterials: {
-    flex:1,
-    borderWidth:1,
-    padding:5,
-    margin:5,
-    flexDirection:'row',
-  },
-});
